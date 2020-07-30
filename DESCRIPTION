@@ -1,0 +1,15 @@
+Package: baffle
+Title: What the Package Does (One Line, Title Case)
+Version: 0.1.0
+Authors@R: 
+    person(given = "Jiří",
+           family = "Moravec",
+           role = c("aut", "cre"),
+           email = "jiri.c.moravec@gmail.com")
+Description: Make a Waffle plot in the base graphics.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Imports: 
+    RColorBrewer
