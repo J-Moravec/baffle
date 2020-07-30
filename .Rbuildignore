@@ -1,2 +1,3 @@
 ^LICENSE\.md$
-waffle.png
+^waffle.png$
+^README.md$
