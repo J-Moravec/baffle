@@ -1,12 +1,17 @@
 Package: baffle
-Title: What the Package Does (One Line, Title Case)
+Title: Make waffle plots with base graphics
 Version: 0.1.0
 Authors@R: 
     person(given = "Jiří",
            family = "Moravec",
            role = c("aut", "cre"),
            email = "jiri.c.moravec@gmail.com")
-Description: Make a Waffle plot in the base graphics.
+Description: Waffle plots are rectangular pie charts that represent a quantity or abundances using
+    colored squares or other symbol. This makes them better at transmitting information as the
+    discrete number of squares is easier to read than the circular area of pie charts.
+    While the original waffle charts were rectangular with 10 rows and colums, with a single square
+    representing 1%, they are nowadays popular in various inforgraphics to visualize any
+    proportional ratios.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
