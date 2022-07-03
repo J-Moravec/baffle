@@ -63,11 +63,8 @@
 #' waffle.mat(design_mat, cols)
 #'
 #' @export
-waffle = function(x, nrow=NULL, ncol=NULL, col=NULL, border=NA, adj=0.1, byrow=TRUE, add=FALSE){
+waffle = function(x, nrow=NULL, ncol=NULL, col=NULL, byrow=TRUE, add=FALSE, ...){
     total = sum(x)
-
-    if(is.null(col))
-        col = RColorBrewer::brewer.pal(9, "Set1")[seq_along(x)]
 
     if(is.null(nrow) && is.null(ncol))
         nrow = ncol = ceiling(sqrt(total))
@@ -80,8 +77,6 @@ waffle = function(x, nrow=NULL, ncol=NULL, col=NULL, border=NA, adj=0.1, byrow=T
 
     if(total > cells)
         stop("The sum of elements in x must be smaller or equal to the total number of cells")
-    if(length(col) < length(x))
-        stop("x and col must have the same length")
 
     # build the design matrix:
     mat = rep(seq_along(x), x)
@@ -89,32 +84,36 @@ waffle = function(x, nrow=NULL, ncol=NULL, col=NULL, border=NA, adj=0.1, byrow=T
     mat = matrix(mat, nrow, ncol, byrow=byrow)
 
     # plot the waffle using the design matrix
-    waffle.mat(mat, col=col, border=border, adj=adj, add=add)
+    waffle.mat(mat, col=col, add=add, ...)
     }
 
 
 #' @rdname waffle
 #' @export
-waffle.mat = function(x, col, border=NA, adj=0.1, add=FALSE){
+waffle.mat = function(x, f=square, col=NULL, ..., add=FALSE){
     nrow = nrow(x)
     ncol = ncol(x)
     x = as.vector(x)
     pick = !is.na(x)
     x = x[pick]
 
+    if(is.null(col))
+        col = RColorBrewer::brewer.pal(9, "Set1")[unique(x)]
+
+    if(length(col) < length(unique(x)))
+        stop("x and col must have the same length")
+
+
     xx = matrix(1:ncol, nrow, ncol, byrow=TRUE)
     xx = as.vector(xx)[pick]
-    x1 = xx + adj
-    x2 = xx + 1 - adj
 
     yy = matrix(nrow:1, nrow, ncol)
     yy = as.vector(yy)[pick]
-    y1 = yy + adj
-    y2 = yy + 1 - adj
 
     if(!add){
         graphics::plot.new()
         graphics::plot.window(xlim=c(1, ncol+1), ylim=c(1, nrow+1), asp=1)
         }
-    graphics::rect(x1, y1, x2, y2, col=col[x], border=border)
+
+    f(xx + 0.5, yy + 0.5, col=col[x], ...)
     }
