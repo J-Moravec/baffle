@@ -3,76 +3,89 @@
 \name{waffle}
 \alias{waffle}
 \alias{waffle.mat}
+\alias{design}
 \title{Make a waffle chart.}
 \usage{
 waffle(
   x,
-  col,
-  nrow = 10,
-  ncol = 10,
-  border = NA,
-  adj = 0.1,
+  f = NULL,
+  ...,
+  nrow = NULL,
+  ncol = NULL,
+  col = NULL,
   byrow = TRUE,
+  bottom = TRUE,
+  left = TRUE,
   add = FALSE
 )
 
-waffle.mat(x, col, border = NA, adj = 0.1, add = FALSE)
+waffle.mat(x, f = square, col = NULL, ..., add = FALSE)
+
+design(x, nrow = NULL, ncol = NULL, byrow = TRUE, bottom = TRUE, left = TRUE)
 }
 \arguments{
-\item{x}{a vector of abundances}
+\item{x}{a vector of abundances or a design matrix (see details)}
 
-\item{col}{a vector of colors, must be the same length as the x. If not specified, the "Set1"
-palette from the package RColorBrewer is used.}
+\item{f}{**optional** a shape function (see details)}
 
-\item{nrow}{an amount of rows}
+\item{...}{**optional** other parameters passed to the `f` function}
 
-\item{ncol}{an amount of columns}
+\item{nrow}{**optional** the number of rows}
 
-\item{border}{the border color of squares, by default no border is plotted}
+\item{ncol}{**optional** the number of columns}
 
-\item{adj}{an amount by which squares are shrinked so they do not touch each other}
+\item{col}{**optional**  a vector of colors, must be the same length as x.
+If not specified, the "Set1" palette from the package RColorBrewer is used.}
 
-\item{byrow}{whether to fill matrix by rows (default) or columns}
+\item{byrow}{**optional** fill matrix by rows}
 
-\item{add}{whether to add to a current plot}
+\item{bottom}{**optional** fill matrix starting from the bottom}
 
-\item{mat}{a design matrix (see details)}
+\item{left}{**optional** fill matrix starting from the left side}
+
+\item{add}{**optional** whether to add to a current plot}
 }
 \description{
 Waffle chart is a pie chart that visually represents abundances with the number of squares.
+The waffle chart consists of squares plotted on a rectangular lattice according to a design
+matrix that is constructed automatically from a vector of abundances or can be provided directly.
 }
 \details{
-The waffle chart consists of squares plotted on a rectangular lattice according to a design
-matrix that is constructed automatically from a vector of abundances or can be directly provided.
+The `waffle()` function accepts a vector of abundances and constructs the design matrix
+using the `design()` function, which is then parsed to the `waffle.mat()` function.
 
-The \code{waffle} function accepts a vector of abundances and constructs the design matrix,
-which is then parsed to the \code{waffle.mat} function. By default, the design matrix is by row
-with sequential numbers according to the vector of abundances \code{x}. This means that if
-the \code{x=c(3,5)}, the matrix will be filled with three \code{1} and five \code{2}, all other
-cells of the matrix are set as unknown values \code{NA}. By default, 10 rows and 10 columns are
-used so that one square represents 1\% of the total. This might have an undesirable side-effect
-If the sum of values in \code{x} is significantly smaller than 100 as a relatively large amount
-of empty space will still be allocated. This can be easily corrected by providing a reasonable
-number of rows and columns.
+The function `design()` construct the design matrix according to specification.
+The design matrix is filled by an integer vector derived from the abundance vector `x`.
+Each integer correspond to the order of abundances in `x`, with the quantity equal to its value
+in `x`. This means that for the `x=c(3,5)`, the design matrix will be filled with three `1`
+and five `2`, all other cells of the design matrix are set as unknown values `NA`.
 
-The function \code{waffle.mat} accepts a custom-made design matrix and thus allows a better
-control of colored regions. It is called internally by the \code{waffle} function, which serves
-as an easy to use interface for the \code{waffle.mat}. For this reason, the \code{waffle.mat}
+By default, the design matrix is filled by row, starting from the bottom left corner,
+this can be changed by setting the variables `byrow`, `bottom` and `left`.
+By setting `byrow=FALSE`, the matrix is filled by columns first, if `bottom=FALSE`, the matrix
+is filled starting from upper left corner and so on.
+
+If `ncol` or `nrow` is not specified, a squared matrix that will fit the sum of abundances
+will be constructed.
+
+The function `waffle.mat()` accepts a custom-made design matrix and thus allows a better
+control of colored regions. It is called internally by the `waffle()` function, which serves
+as an easy to use interface for the `waffle.mat()`. For this reason, the `waffle.mat()`
 does not checks for the validity of input arguments and does not set a default colors.
 
-The assumed and allocated coordinate system is from \code{1} to \code{ncol+1} for x and
-from \code{1} to \code{ncol+1} for y. Squares are filled from top right corner of this coordinate
+The assumed and allocated coordinate system is from `0` to `ncol` for x and
+from `0` to `ncol` for y. Squares are filled from top right corner of this coordinate
 system.
 
-If \code{add=FALSE}, a new window with a fixed aspect ratio x/y=1 is allocated so that
-plotted rectangles are squares. This might cause the plot margins, and thus the main title,
-to be quite far away. In this case, plotting the title using \code{text} instead of \code{title}
-might be a better idea. In this case, the coordinates might be:
+If `add=FALSE`, a new window with a fixed aspect ratio x/y=1 is allocated so that
+plotted polygons are squares (by default). This might cause the plot margins,
+and thus the main title, to be quite far away. In this case, plotting the title using `text()`
+instead of `title()` might be a better idea. In this case, the coordinates might be:
 \code{text(x=(ncol+2)/2, y=nrow+1,...)}
 }
 \examples{
 waffle(c(50,25,25))
-waffle(c(25,75), c("darkorchid", "lightgray"))
+waffle(c(25,75), col=c("darkorchid", "lightgray"))
 waffle(c(14,8,4), nrow=3)
 
 # custom design matrix with a more complex structure
@@ -83,9 +96,8 @@ design_mat[2,1:8] = 1
 design_mat[4,] = 2
 design_mat[5,1:4] = 2
 design_mat[7,1:5] = 3
-waffle.mat(design_mat, cols)
-
+waffle.mat(design_mat, col=cols)
 }
 \seealso{
-\code{\link[waffle]{waffle}} in the \code{waffle} package for a ggplot2 version.
+the `waffle` package for a `ggplot2` version.
 }

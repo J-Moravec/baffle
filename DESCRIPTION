@@ -15,6 +15,9 @@ Description: Waffle plots are rectangular pie charts that represent a quantity o
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.2.0
 Imports: 
     RColorBrewer
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
