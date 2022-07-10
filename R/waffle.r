@@ -22,6 +22,9 @@
 #' If `ncol` or `nrow` is not specified, a squared matrix that will fit the sum of abundances
 #' will be constructed.
 #'
+#' In addition, if the input vector `x` is a named vector, the names are preserved in the
+#' `levels` attribute. 
+#'
 #' The function `waffle.mat()` accepts a custom-made design matrix and thus allows a better
 #' control of colored regions. It is called internally by the `waffle()` function, which serves
 #' as an easy to use interface for the `waffle.mat()`. For this reason, the `waffle.mat()`
@@ -45,11 +48,12 @@
 #' @param byrow **optional** fill matrix by rows
 #' @param bottom **optional** fill matrix starting from the bottom
 #' @param left **optional** fill matrix starting from the left side
-#' @param col **optional**  a vector of colors, must be the same length as x.
-#'  If not specified, the "Set1" palette from the package RColorBrewer is used.
 #' @param add **optional** whether to add to a current plot
 #' @param f **optional** a shape function (see details)
-#' @param ... **optional** other parameters passed to the `f` function 
+#' @param ... **optional** other parameters passed to the `f` function
+#' @return `design()` returns a design matrix (see details), in addition, if `x` is a named vector,
+#'   the names are preserved in the `levels` attribute.
+#'   `waffle()` and `waffle.mat()` do not have a return value
 #'
 #' @seealso the `waffle` package for a `ggplot2` version.
 #'
@@ -59,7 +63,7 @@
 #' waffle(c(14,8,4), nrow=3)
 #'
 #' # custom design matrix with a more complex structure
-#' cols = RColorBrewer::brewer.pal(3, "Set1")
+#' cols = palette.colors(3, "Set 1")
 #' design_mat = matrix(NA, 7,10)
 #' design_mat[1,] = 1
 #' design_mat[2,1:8] = 1
@@ -68,19 +72,19 @@
 #' design_mat[7,1:5] = 3
 #' waffle.mat(design_mat, col=cols)
 #' @export
-waffle = function(x, f=NULL, ..., nrow=NULL, ncol=NULL, col=NULL, byrow=TRUE, bottom=TRUE, left=TRUE, add=FALSE){
+waffle = function(x, f=NULL, ..., nrow=NULL, ncol=NULL, byrow=TRUE, bottom=TRUE, left=TRUE, add=FALSE){
 
     # construct design matrix
     mat = design(x, nrow=nrow, ncol=ncol, byrow=byrow, bottom=bottom, left=left)
 
     # plot the waffle using the design matrix
-    waffle.mat(mat, f=NULL, ..., col=col, add=add)
+    waffle.mat(mat, f=NULL, ..., add=add)
     }
 
-# TODO S3 classes?
+
 #' @rdname waffle
 #' @export
-waffle.mat = function(x, f=square, col=NULL, ..., add=FALSE){
+waffle.mat = function(x, f=square, ..., add=FALSE){
     # TODO
     # turn x into factor, we need factor
     # we need factor to preserve elements of x from waffle that have 0 abundances
@@ -93,43 +97,31 @@ waffle.mat = function(x, f=square, col=NULL, ..., add=FALSE){
     if(is.null(f))
         f = square
 
-    if(is.null(col))
-        col = RColorBrewer::brewer.pal(9, "Set1")[unique(x)]
+    dots = list(...)
 
-    if(length(col) < length(unique(x)))
-        stop("x and col must have the same length")
+    n = max(x)
+    if(is.null(dots[["col"]]) && n < 10)
+        dots[["col"]] = grDevices::palette.colors(n, "Set 1")
 
+    if(is.null(dots[["col"]]) && n >= 10)
+        dots[["col"]] = grDevices::hcl.colors(n, "Zissou 1")
+
+    dots = do.call(recycle_dots, c("x"=list(x), dots))
 
     xx = matrix(1:ncol-1, nrow, ncol, byrow=TRUE)
-    xx = as.vector(xx)[pick]
+    xx = as.vector(xx)[pick] + 0.5
 
     yy = matrix(nrow:1-1, nrow, ncol)
-    yy = as.vector(yy)[pick]
+    yy = as.vector(yy)[pick] + 0.5
 
     if(!add){
         graphics::plot.new()
         graphics::plot.window(xlim=c(0, ncol), ylim=c(0, nrow), asp=1)
         }
 
-    f(xx + 0.5, yy + 0.5, col=col[x], ...)
+    do.call(f, args=c("x"=list(xx), "y"=list(yy), dots))
     }
 
-
-# Design a matrix for waffle chart.
-#
-# Create a design matrix for a waffle chart out of vector of abundances.
-#
-#@template design_details
-#
-#
-# If `x` is a named vector, the names corresponding to the integers are preserved in the `levels`
-# attribute.
-#
-# @template design_params
-# @return an integer matrix, where integers correspond to the order of input abundances, and their
-#   count to the individual abundances. The remaining cells are filled with `NA`.
-#   If the vector of abundances is a named vector, the names are preserved in the `levels`
-#   attribute.
 
 #' @rdname waffle
 #' @export
@@ -169,4 +161,27 @@ design = function(x, nrow=NULL, ncol=NULL, byrow=TRUE, bottom=TRUE, left=TRUE){
         levels(mat) = names(x)
 
     mat
+    }
+
+
+#' Recycle dots args
+#'
+#' @keywords internal
+recycle_dots = function(x, ...){
+    recycle = function(x, vector, length){
+        if(length(x) > 1){
+            x = rep(x, length.out=length)
+            x = x[vector]
+            }
+
+        x
+        }
+
+    n = max(x) # TODO integrate with levels later
+
+    dots = list(...)
+
+    dots[] = lapply(dots, recycle, vector=x, length=n)
+
+    dots
     }

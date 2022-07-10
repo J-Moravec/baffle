@@ -12,14 +12,13 @@ waffle(
   ...,
   nrow = NULL,
   ncol = NULL,
-  col = NULL,
   byrow = TRUE,
   bottom = TRUE,
   left = TRUE,
   add = FALSE
 )
 
-waffle.mat(x, f = square, col = NULL, ..., add = FALSE)
+waffle.mat(x, f = square, ..., add = FALSE)
 
 design(x, nrow = NULL, ncol = NULL, byrow = TRUE, bottom = TRUE, left = TRUE)
 }
@@ -34,9 +33,6 @@ design(x, nrow = NULL, ncol = NULL, byrow = TRUE, bottom = TRUE, left = TRUE)
 
 \item{ncol}{**optional** the number of columns}
 
-\item{col}{**optional**  a vector of colors, must be the same length as x.
-If not specified, the "Set1" palette from the package RColorBrewer is used.}
-
 \item{byrow}{**optional** fill matrix by rows}
 
 \item{bottom}{**optional** fill matrix starting from the bottom}
@@ -44,6 +40,11 @@ If not specified, the "Set1" palette from the package RColorBrewer is used.}
 \item{left}{**optional** fill matrix starting from the left side}
 
 \item{add}{**optional** whether to add to a current plot}
+}
+\value{
+`design()` returns a design matrix (see details), in addition, if `x` is a named vector,
+  the names are preserved in the `levels` attribute.
+  `waffle()` and `waffle.mat()` do not have a return value
 }
 \description{
 Waffle chart is a pie chart that visually represents abundances with the number of squares.
@@ -68,6 +69,9 @@ is filled starting from upper left corner and so on.
 If `ncol` or `nrow` is not specified, a squared matrix that will fit the sum of abundances
 will be constructed.
 
+In addition, if the input vector `x` is a named vector, the names are preserved in the
+`levels` attribute. 
+
 The function `waffle.mat()` accepts a custom-made design matrix and thus allows a better
 control of colored regions. It is called internally by the `waffle()` function, which serves
 as an easy to use interface for the `waffle.mat()`. For this reason, the `waffle.mat()`
@@ -89,7 +93,7 @@ waffle(c(25,75), col=c("darkorchid", "lightgray"))
 waffle(c(14,8,4), nrow=3)
 
 # custom design matrix with a more complex structure
-cols = RColorBrewer::brewer.pal(3, "Set1")
+cols = palette.colors(3, "Set 1")
 design_mat = matrix(NA, 7,10)
 design_mat[1,] = 1
 design_mat[2,1:8] = 1
