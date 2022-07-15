@@ -70,7 +70,8 @@ If `ncol` or `nrow` is not specified, a squared matrix that will fit the sum of 
 will be constructed.
 
 In addition, if the input vector `x` is a named vector, the names are preserved in the
-`levels` attribute. 
+`levels` attribute. These levels are not currently used, but might be used in the future
+for automatic legend creation and subsetting.
 
 The function `waffle.mat()` accepts a custom-made design matrix and thus allows a better
 control of colored regions. It is called internally by the `waffle()` function, which serves

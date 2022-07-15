@@ -6,6 +6,16 @@
 \usage{
 recycle_dots(x, ...)
 }
+\arguments{
+\item{x}{an integer vector, typically with values ranging from 1 to n, with each integer
+with each integer specifying an index of element for each item in `...`}
+
+\item{...}{additional arguments, if length of item of `...` is larger than one, its elements are
+is recycled according to indiced specified by the vector `x`}
+}
+\value{
+recycled arguments of `...`
+}
 \description{
 Recycle dots args
 }

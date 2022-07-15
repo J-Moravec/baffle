@@ -23,7 +23,7 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(baffle)
 waffle(c(50,25,25))
-waffle(c(25,75), c("darkorchid", "lightgray"))
+waffle(c(25,75), col=c("darkorchid", "lightgray"))
 waffle(c(14,8,4), nrow=3)
 ```
 

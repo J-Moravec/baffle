@@ -23,7 +23,8 @@
 #' will be constructed.
 #'
 #' In addition, if the input vector `x` is a named vector, the names are preserved in the
-#' `levels` attribute. 
+#' `levels` attribute. These levels are not currently used, but might be used in the future
+#' for automatic legend creation and subsetting.
 #'
 #' The function `waffle.mat()` accepts a custom-made design matrix and thus allows a better
 #' control of colored regions. It is called internally by the `waffle()` function, which serves
@@ -78,16 +79,15 @@ waffle = function(x, f=NULL, ..., nrow=NULL, ncol=NULL, byrow=TRUE, bottom=TRUE,
     mat = design(x, nrow=nrow, ncol=ncol, byrow=byrow, bottom=bottom, left=left)
 
     # plot the waffle using the design matrix
-    waffle.mat(mat, f=NULL, ..., add=add)
+    waffle.mat(mat, f=f, ..., add=add)
     }
 
 
 #' @rdname waffle
 #' @export
 waffle.mat = function(x, f=square, ..., add=FALSE){
-    # TODO
-    # turn x into factor, we need factor
-    # we need factor to preserve elements of x from waffle that have 0 abundances
+    # TODO can we utilize the levels() from [design]? Perhaps to make automatic legend?
+
     nrow = nrow(x)
     ncol = ncol(x)
     x = as.vector(x)
@@ -166,6 +166,11 @@ design = function(x, nrow=NULL, ncol=NULL, byrow=TRUE, bottom=TRUE, left=TRUE){
 
 #' Recycle dots args
 #'
+#' @param x an integer vector, typically with values ranging from 1 to n, with each integer
+#'   with each integer specifying an index of element for each item in `...`
+#' @param ... additional arguments, if length of item of `...` is larger than one, its elements are
+#'   is recycled according to indiced specified by the vector `x`
+#' @return recycled arguments of `...`
 #' @keywords internal
 recycle_dots = function(x, ...){
     recycle = function(x, vector, length){
