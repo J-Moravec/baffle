@@ -7,9 +7,9 @@ test_that("Design matrix is filled in the correct direction", {
     
     expect_identical(design(x), square.matrix(c(3, NA, 1, 1), 2))
     expect_identical(design(x, byrow=FALSE), square.matrix(c(1, NA, 1, 3), 2))
-    expect_identical(design(x, bottom=FALSE), square.matrix(c(1, 1, 3, NA), 2))
-    expect_identical(design(x, left=FALSE), square.matrix(c(NA, 3, 1, 1), 2))
-    expect_identical(design(x, byrow=FALSE, bottom=FALSE, left=FALSE),
+    expect_identical(design(x, from="topleft"), square.matrix(c(1, 1, 3, NA), 2))
+    expect_identical(design(x, from="bottomright"), square.matrix(c(NA, 3, 1, 1), 2))
+    expect_identical(design(x, byrow=FALSE, from="topright"),
                      square.matrix(c(3, 1, NA, 1), 2))
     })
 

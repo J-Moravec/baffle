@@ -46,9 +46,9 @@
 #' @param x a vector of abundances or a design matrix (see details)
 #' @param nrow **optional** the number of rows
 #' @param ncol **optional** the number of columns
-#' @param byrow **optional** fill matrix by rows
-#' @param bottom **optional** fill matrix starting from the bottom
-#' @param left **optional** fill matrix starting from the left side
+#' @param byrow **optional** fill matrix by rows or by columns
+#' @param from **optional** starting position from which the matrix is filled, one of
+#'   "bottomleft", "bottomright", "topleft" or "topright".
 #' @param add **optional** whether to add to a current plot
 #' @param f **optional** a shape function (see details)
 #' @param ... **optional** other parameters passed to the `f` function
@@ -73,10 +73,10 @@
 #' design_mat[7,1:5] = 3
 #' waffle.mat(design_mat, col=cols)
 #' @export
-waffle = function(x, f=NULL, ..., nrow=NULL, ncol=NULL, byrow=TRUE, bottom=TRUE, left=TRUE, add=FALSE){
+waffle = function(x, f=NULL, ..., nrow=NULL, ncol=NULL, byrow=TRUE, from="bottomleft", add=FALSE){
 
     # construct design matrix
-    mat = design(x, nrow=nrow, ncol=ncol, byrow=byrow, bottom=bottom, left=left)
+    mat = design(x, nrow=nrow, ncol=ncol, byrow=byrow, from=from)
 
     # plot the waffle using the design matrix
     waffle.mat(mat, f=f, ..., add=add)
@@ -125,7 +125,9 @@ waffle.mat = function(x, f=square, ..., add=FALSE){
 
 #' @rdname waffle
 #' @export
-design = function(x, nrow=NULL, ncol=NULL, byrow=TRUE, bottom=TRUE, left=TRUE){
+design = function(x, nrow=NULL, ncol=NULL, byrow=TRUE, from="bottomleft"){
+    from = match.arg(from, c("bottomleft", "bottomright", "topleft", "topright"))
+
     total = sum(x)
 
     if(any(x < 0))
@@ -152,9 +154,10 @@ design = function(x, nrow=NULL, ncol=NULL, byrow=TRUE, bottom=TRUE, left=TRUE){
     mat = matrix(mat, nrow, ncol, byrow=byrow)
 
     # by default, matrix() is filled from top left corner, so we use some switches to flip it
-    if(bottom)
+    if(from %in% c("bottomleft", "bottomright"))
         mat = mat[nrow:1, , drop=FALSE]
-    if(!left)
+
+    if(from %in% c("bottomright", "topright"))
         mat = mat[, ncol:1, drop=FALSE]
 
     if(! names(x) |> is.null() )
