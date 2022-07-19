@@ -13,14 +13,13 @@ waffle(
   nrow = NULL,
   ncol = NULL,
   byrow = TRUE,
-  bottom = TRUE,
-  left = TRUE,
+  from = "bottomleft",
   add = FALSE
 )
 
 waffle.mat(x, f = square, ..., add = FALSE)
 
-design(x, nrow = NULL, ncol = NULL, byrow = TRUE, bottom = TRUE, left = TRUE)
+design(x, nrow = NULL, ncol = NULL, byrow = TRUE, from = "bottomleft")
 }
 \arguments{
 \item{x}{a vector of abundances or a design matrix (see details)}
@@ -33,11 +32,10 @@ design(x, nrow = NULL, ncol = NULL, byrow = TRUE, bottom = TRUE, left = TRUE)
 
 \item{ncol}{**optional** the number of columns}
 
-\item{byrow}{**optional** fill matrix by rows}
+\item{byrow}{**optional** fill matrix by rows or by columns}
 
-\item{bottom}{**optional** fill matrix starting from the bottom}
-
-\item{left}{**optional** fill matrix starting from the left side}
+\item{from}{**optional** starting position from which the matrix is filled, one of
+"bottomleft", "bottomright", "topleft" or "topright".}
 
 \item{add}{**optional** whether to add to a current plot}
 }

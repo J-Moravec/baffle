@@ -3,6 +3,7 @@
 export(circle)
 export(design)
 export(ellipse)
+export(rasters)
 export(rcpoly)
 export(rectangle)
 export(shapes)
