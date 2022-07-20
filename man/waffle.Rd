@@ -14,12 +14,24 @@ waffle(
   ncol = NULL,
   byrow = TRUE,
   from = "bottomleft",
+  stacked = TRUE,
+  gap = 0,
+  horiz = TRUE,
   add = FALSE
 )
 
 waffle.mat(x, f = square, ..., add = FALSE)
 
-design(x, nrow = NULL, ncol = NULL, byrow = TRUE, from = "bottomleft")
+design(
+  x,
+  nrow = NULL,
+  ncol = NULL,
+  byrow = TRUE,
+  from = "bottomleft",
+  stacked = TRUE,
+  horiz = FALSE,
+  gap = 0
+)
 }
 \arguments{
 \item{x}{a vector of abundances or a design matrix (see details)}
@@ -37,6 +49,13 @@ design(x, nrow = NULL, ncol = NULL, byrow = TRUE, from = "bottomleft")
 \item{from}{**optional** starting position from which the matrix is filled, one of
 "bottomleft", "bottomright", "topleft" or "topright".}
 
+\item{stacked}{**optional** if FALSE, produce an unstacked waffle chart, see details}
+
+\item{gap}{**optional** gap between unstacked subwaffles, works only for unstacked waffle charts}
+
+\item{horiz}{**optional** if FALSE, vertical instead of horizontal waffle chart is produced,
+works only for unstacked waffle charts}
+
 \item{add}{**optional** whether to add to a current plot}
 }
 \value{
@@ -47,28 +66,33 @@ design(x, nrow = NULL, ncol = NULL, byrow = TRUE, from = "bottomleft")
 \description{
 Waffle chart is a pie chart that visually represents abundances with the number of squares.
 The waffle chart consists of squares plotted on a rectangular lattice according to a design
-matrix that is constructed automatically from a vector of abundances or can be provided directly.
+matrix that is constructed from a vector of abundances or can be provided directly.
 }
 \details{
-The `waffle()` function accepts a vector of abundances and constructs the design matrix
-using the `design()` function, which is then parsed to the `waffle.mat()` function.
+The `waffle()` function accepts a vector of abundances and plots a waffle chart.
+This is done by first constructing a design matrix using the `design()` function,
+which is then parsed to the `waffle.mat()` function.
 
-The function `design()` construct the design matrix according to specification.
+The `design()` functions construct a design matrix according.
 The design matrix is filled by an integer vector derived from the abundance vector `x`.
-Each integer correspond to the order of abundances in `x`, with the quantity equal to its value
+Each integer correspond to the order of abundances in `x`, with the quantity equal to the value
 in `x`. This means that for the `x=c(3,5)`, the design matrix will be filled with three `1`
 and five `2`, all other cells of the design matrix are set as unknown values `NA`.
 
 By default, the design matrix is filled by row, starting from the bottom left corner,
-this can be changed by setting the variables `byrow`, `bottom` and `left`.
-By setting `byrow=FALSE`, the matrix is filled by columns first, if `bottom=FALSE`, the matrix
-is filled starting from upper left corner and so on.
+this can be changed by setting the variables `byrow` and `from`.
+By setting `byrow=FALSE`, the matrix is filled by columns first.
 
 If `ncol` or `nrow` is not specified, a squared matrix that will fit the sum of abundances
 will be constructed.
 
-In addition, if the input vector `x` is a named vector, the names are preserved in the
-`levels` attribute. These levels are not currently used, but might be used in the future
+By default, the design matrix is stacked, i.e., all the elements are placed in a single
+matrix object, similarly how barplot produces stacked lines. By specifying `stack=FALSE`,
+the `design()` unstacks the elements, each are then placed in their own matricies, which
+are then connected by `NA` elements of size `gap`. More complex 
+
+If the input vector `x` is a named vector, the names are preserved in the `levels`
+attribute. These levels are not currently used, but might be used in the future
 for automatic legend creation and subsetting.
 
 The function `waffle.mat()` accepts a custom-made design matrix and thus allows a better
