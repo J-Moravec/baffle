@@ -135,6 +135,18 @@ waffle.mat = function(x, f=square, ..., add=FALSE){
         graphics::plot.window(xlim=c(0, ncol), ylim=c(0, nrow), asp=1)
         }
 
+
+    # vectorize over vector of functions f
+    if(length(f) > 1){
+        f = rep(f, length.out=n)
+        f = f[x]
+        
+        h = function(g, ...){do.call(g, list(...))}
+        .mapply(h, dots=c("g"=list(f), "x"=list(xx), "y"=list(yy), dots), NULL)
+
+        return(invisible())
+        }
+
     do.call(f, args=c("x"=list(xx), "y"=list(yy), dots))
     }
 
