@@ -183,7 +183,7 @@ recycle_dots = function(x, ...){
 #' @export
 design = function(
     x, nrow=NULL, ncol=NULL, byrow=TRUE, from="bottomleft",
-    stacked=TRUE, horiz=FALSE, gap=0
+    stacked=TRUE, horiz=TRUE, gap=0
     ){
     if(stacked){
         design_stacked(x, nrow=nrow, ncol=ncol, byrow=byrow, from=from)
@@ -238,12 +238,12 @@ design_stacked = function(x, nrow=NULL, ncol=NULL, byrow=TRUE, from="bottomleft"
 
 # internal
 design_unstacked = function(
-    x, nrow=NULL, ncol=NULL, byrow=TRUE, from="bottomleft", gap=0, horiz=FALSE
+    x, nrow=NULL, ncol=NULL, byrow=TRUE, from="bottomleft", gap=0, horiz=TRUE
     ){
-    if(is.null(nrow) && !horiz)
+    if(is.null(nrow) && horiz)
         nrow = max(ceiling(sqrt(x)))
 
-    if(is.null(ncol) && horiz)
+    if(is.null(ncol) && !horiz)
         ncol = max(ceiling(sqrt(x)))
 
     n = length(x)
@@ -255,18 +255,17 @@ design_unstacked = function(
         
         mat[[i]] = design(y, nrow=nrow, ncol=ncol, byrow=byrow, from=from)
         }
-    mat
     
     if(horiz){
-        empty = matrix(NA, ncol=ncol, nrow=gap)
-        mat[[n+1]] = empty
-        mat = mat[interleave(n+1, seq_len(n))[-1]]
-        mat = do.call(rbind, mat)
-        } else {
         empty = matrix(NA, nrow=nrow, ncol=gap)
         mat[[n+1]] = empty
         mat = mat[interleave(n+1, seq_len(n))[-1]]
         mat = do.call(cbind, mat)
+        } else {
+        empty = matrix(NA, ncol=ncol, nrow=gap)
+        mat[[n+1]] = empty
+        mat = mat[interleave(n+1, seq_len(n))[-1]]
+        mat = do.call(rbind, mat)
         }
         
     mat

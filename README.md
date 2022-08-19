@@ -1,13 +1,11 @@
 # baffle
-Waffle graphs in the Base graphics.
-
-![example waffle](waffle.png)
+Waffle graphs in base R graphics.
 
 ## Installation
 
-You can install the released version of baffle from [CRAN](https://CRAN.R-project.org) with:
+You can install the latest version of baffle from [CRAN](https://CRAN.R-project.org) with:
 
-``` r
+```r
 install.packages("baffle")
 ```
 
@@ -18,12 +16,11 @@ devtools::install_github("j-moravec/baffle")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+See [online documentation](https://j-moravec.github.io/baffle/) for a more complex examples.
 
-``` r
+```r
 library(baffle)
-waffle(c(50,25,25))
 waffle(c(25,75), col=c("darkorchid", "lightgray"))
-waffle(c(14,8,4), nrow=3)
 ```
 
+![](man/figures/waffle.svg)

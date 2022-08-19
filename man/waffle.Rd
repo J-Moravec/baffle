@@ -29,7 +29,7 @@ design(
   byrow = TRUE,
   from = "bottomleft",
   stacked = TRUE,
-  horiz = FALSE,
+  horiz = TRUE,
   gap = 0
 )
 }

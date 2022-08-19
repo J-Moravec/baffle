@@ -2,3 +2,7 @@
 ^waffle.png$
 ^README.md$
 ^TODO.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

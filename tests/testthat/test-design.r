@@ -23,3 +23,11 @@ test_that("Design matrix is constructed with the correct dimensions", {
     expect_identical(design(0, nrow=3, ncol=3) |> dim(), c(3L,3L))
     expect_error(design(0), "Unable to determine dimension of the matrix.")
     })
+
+
+test_that("Unstacked design matrix is constructed correctly", {
+    expect_identical(design(c(1, 2, 3), stacked=FALSE), 
+        matrix(as.integer(c(NA, 1, 2, 2, 3, 3, NA, 3)), 2, 4))
+    expect_identical(design(c(1, 2, 3), stacked=FALSE, horiz=FALSE),
+        matrix(as.integer(c(1, 2, 3, 3, NA, 2, NA, 3)), 4, 2))
+    })
