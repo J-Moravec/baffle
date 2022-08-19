@@ -85,7 +85,7 @@
 
 <dt>n</dt>
 <dd><p>the number of vertices of polygon, with the minimum of three (triangle). Large `n`, such
-as `n=1000` approximate circle. The vertices start at the 12'oclock position and are placed
+as `n=1000` approximate circle. The vertices start at the 12 o'clock position and are placed
 clockwise in a regular intervals.</p></dd>
 
 
@@ -110,21 +110,21 @@ accidental overplotting when individual shapes are plotted next to each other in
 intervals, the distance between such points would be equal to the diameter in both cases.
 See examples.</p>
 <p>All shapes function accept the graphical parameters `col`, `border`, `lty` and `lwd`, which
-are passed to the [graphics::polygon()] and [graphics::rect()]. Appart of a different default
+are passed to the [graphics::polygon()] and [graphics::rect()]. Apart of a different default
 values, they behave in the same way.</p>
-<p>All parameters are vectorised and will recycle as required, with the typical warning if
+<p>All parameters are vectorized and will recycle as required, with the typical warning if
 parameters are not multiply of each other. This can be used to create pleasant geometric images.
 See examples.</p>
     </div>
     <div class="section level2">
     <h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a></h2>
     
-<ul><li><p><code>square</code>: draw squares</p></li>
-<li><p><code>rectangle</code>: draw rectangles</p></li>
-<li><p><code>circle</code>: draw circles</p></li>
-<li><p><code>ellipse</code>: draw ellipses</p></li>
-<li><p><code>rcpoly</code>: draw regular convex polygons</p></li>
-<li><p><code>shapes</code>: draw convex polygons</p></li>
+<ul><li><p><code>square()</code>: draw squares</p></li>
+<li><p><code>rectangle()</code>: draw rectangles</p></li>
+<li><p><code>circle()</code>: draw circles</p></li>
+<li><p><code>ellipse()</code>: draw ellipses</p></li>
+<li><p><code>rcpoly()</code>: draw regular convex polygons</p></li>
+<li><p><code>shapes()</code>: draw convex polygons</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -147,7 +147,7 @@ See examples.</p>
 <span class="r-in"><span><span class="fu">rcpoly</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">4</span>, d<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, rotate<span class="op">=</span><span class="fl">45</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="Shapes-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Vectorising parameters</span></span></span>
+<span class="r-in"><span><span class="co"># Vectorizing parameters</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">rotate</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">18</span>, by<span class="op">=</span><span class="fl">30</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>, by<span class="op">=</span><span class="op">-</span><span class="fl">0.1</span>, length.out <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">rotate</span><span class="op">)</span><span class="op">)</span></span></span>
