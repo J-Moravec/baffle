@@ -103,7 +103,7 @@ the diameter of plotted object is slightly smaller than one.
 `ellipse`, regular convex polygon `rcpoly`. See `?Shapes` for more information.
 These functions are similar to the `graphics::symbols()`.
 
-These functions are vectorised, in fact even the `f` argument in the `waffle` is vectorised, so
+These functions are vectorized, in fact even the `f` argument in the `waffle` is vectorized, so
 multiple polygons can be plotted effortesly.
 
 For example, we can represent the number of cylinders in the above example with regular n-sided

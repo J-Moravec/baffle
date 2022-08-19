@@ -33,7 +33,7 @@ shapes(x, y, n, d = 0.9, dx = d, dy = d, rotate = 0, ...)
 \item{dx, dy}{**optional** diameter in either coordinate direction}
 
 \item{n}{the number of vertices of polygon, with the minimum of three (triangle). Large `n`, such
-as `n=1000` approximate circle. The vertices start at the 12'oclock position and are placed
+as `n=1000` approximate circle. The vertices start at the 12 o'clock position and are placed
 clockwise in a regular intervals.}
 
 \item{rotate}{**optional** clockwise rotation in degrees (0-360°),
@@ -59,28 +59,28 @@ intervals, the distance between such points would be equal to the diameter in bo
 See examples.
 
 All shapes function accept the graphical parameters `col`, `border`, `lty` and `lwd`, which
-are passed to the [graphics::polygon()] and [graphics::rect()]. Appart of a different default
+are passed to the [graphics::polygon()] and [graphics::rect()]. Apart of a different default
 values, they behave in the same way.
 
-All parameters are vectorised and will recycle as required, with the typical warning if
+All parameters are vectorized and will recycle as required, with the typical warning if
 parameters are not multiply of each other. This can be used to create pleasant geometric images.
 See examples.
 }
 \section{Functions}{
 \itemize{
-\item \code{square}: draw squares
+\item \code{square()}: draw squares
 
-\item \code{rectangle}: draw rectangles
+\item \code{rectangle()}: draw rectangles
 
-\item \code{circle}: draw circles
+\item \code{circle()}: draw circles
 
-\item \code{ellipse}: draw ellipses
+\item \code{ellipse()}: draw ellipses
 
-\item \code{rcpoly}: draw regular convex polygons
+\item \code{rcpoly()}: draw regular convex polygons
 
-\item \code{shapes}: draw convex polygons
+\item \code{shapes()}: draw convex polygons
+
 }}
-
 \examples{
 plot(0, 0) # create plotting window
 
@@ -95,7 +95,7 @@ rcpoly(0, 0, 4, d=1)
 # Same output as `square`, but not equivalent
 rcpoly(0, 0, 4, d=sqrt(2), rotate=45)
 
-# Vectorising parameters
+# Vectorizing parameters
 plot(0, 0)
 rotate = seq(0, 18, by=30)
 d = seq(1, by=-0.1, length.out = length(rotate))
