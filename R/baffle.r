@@ -5,4 +5,3 @@
 #' @docType package
 #' @name baffle
 NULL
-#> NULL
