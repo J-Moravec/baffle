@@ -35,6 +35,7 @@
 #'   not available for `square` and `rectangle`
 #' @param ... **optional** graphical parameters `col`, `border`, `lty` and `lwd` passed to
 #'   [graphics::polygon()] or [graphics::rect()]
+#' @return No return value, called for side effects
 #' @importFrom graphics par
 #'
 #' @examples

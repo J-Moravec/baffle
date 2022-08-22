@@ -39,6 +39,9 @@ clockwise in a regular intervals.}
 \item{rotate}{**optional** clockwise rotation in degrees (0-360°),
 not available for `square` and `rectangle`}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 A collection of functions for plotting polygonal shapes.
 }

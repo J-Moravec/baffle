@@ -20,6 +20,9 @@ rasters(x, y, image, d = 0.9, dx = NA, dy = NA, rotate = 0, ...)
 \item{...}{**optional** other parameters passed to [graphics::rasterImage()],
 such as `interpolate`}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Plot raster image centered at `x` and `y` coordinates scaled to diameter `d`.
 }

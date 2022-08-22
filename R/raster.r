@@ -27,6 +27,7 @@
 #' @param rotate **optional** clockwise rotation in degrees (0-360°)
 #' @param ... **optional** other parameters passed to [graphics::rasterImage()],
 #'  such as `interpolate`
+#' @return No return value, called for side effects
 #'
 #' @examples
 #' # create plotting window
