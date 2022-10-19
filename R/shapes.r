@@ -6,7 +6,8 @@
 #' (or `dx` and `dy`). Typically, different shapes are obtained through a parametrization
 #' of the `shapes()` function, which draws a convex polygon using the [graphics::polygon()],
 #' with the exception of `square()` and `rectangle()` function, which use the [graphics::rect()]
-#' function instead, behave slightly differently, and should be slightly faster.
+#' function instead, behave slightly differently, and should be slightly faster, and the
+#' `rounded_square()` and `rounded_rectangle()`, which use `round_rect()` function.
 #'
 #' The diameter parameter `d` is interpreted differently depending for `square()` and `rectangle()`
 #' and for other polygonal functions build on the `shapes()` function (`circle()`, `ellipse()`
@@ -28,9 +29,13 @@
 #' @param x,y coordinates
 #' @param n the number of vertices of polygon, with the minimum of three (triangle). Large `n`, such
 #'   as `n=1000` approximate circle. The vertices start at the 12 o'clock position and are placed
-#'   clockwise in a regular intervals.
+#'   clockwise in a regular intervals. For `rounded_square` and `rounded_rectangle`, the number of
+#'   vertices that approximate the circular shape of the rounded corners. Small `n`, such as
+#'   `n=10` should have sufficient smoothness for most applications. 
 #' @param d **optional** diameter, see details
 #' @param dx,dy **optional** diameter in either coordinate direction
+#' @param r,rx,ry **optional** for rounded corner, the proportion of side marking the start of
+#'   rounded corner.
 #' @param rotate **optional** clockwise rotation in degrees (0-360°),
 #'   not available for `square` and `rectangle`
 #' @param ... **optional** graphical parameters `col`, `border`, `lty` and `lwd` passed to
@@ -74,14 +79,42 @@ rectangle = function(x, y, d=0.9, dx=d, dy=d, ...){
     .rectangle(x=x, y=y, d=d, dx=dx, dy=dy, ...)
     }
 
+
 # internal
 .rectangle = function(
     x, y, d=0.9, dx=d, dy=d,
     col=par("fg"), border=NA, lty=par("lty"), lwd=par("lwd")
     ){
-    graphics::rect(x - dx/2, y - dy/2, x + dx/2, y+ dy/2, col=col, border=border, lty=lty, lwd=lwd)
+    graphics::rect(x - dx/2, y - dy/2, x + dx/2, y + dy/2,
+                   col=col, border=border, lty=lty, lwd=lwd)
     }
 
+
+#' @describeIn Shapes draw squares with rounded corners
+rounded_square = function(x, y, d=0.9, r=0.2, n=10, ...){
+    .rounded_rectangle(x=x, y=y, d=d, r=r, n=n, ...)
+    }
+
+
+#' @describeIn Shapes draw rectangles with rounded corners
+rounded_rectangle = function(
+    x, y, d=0.9, dx=d, dy=d,
+    r=0.2, rx=r, ry=r, n=10,
+    ...
+    ){
+    .rounded_rectangle(x=x, y=y, d=d, dx=dx, dy=dy, r=r, rx=rx, ry=ry, n=n, ...)    
+    }
+
+
+# internal
+.rounded_rectangle = function(
+    x, y, d=0.9, dx=d, dy=d, r=0.2, rx=r, ry=r, n=10,
+    col=par("fg"), border=NA, lty=par("lty"), lwd=par("lwd"),
+    ...
+    ){
+    round_rect(x - dx/2, y - dy/2, x + dx/2, y + dy/2, xr=rx, yr=ry, n=n,
+               col=col, border=border, lty=lty, lwd=lwd, ...)
+    }
 
 #' @describeIn Shapes draw circles
 #' @export

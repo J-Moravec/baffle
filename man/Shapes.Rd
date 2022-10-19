@@ -4,6 +4,8 @@
 \alias{Shapes}
 \alias{square}
 \alias{rectangle}
+\alias{rounded_square}
+\alias{rounded_rectangle}
 \alias{circle}
 \alias{ellipse}
 \alias{rcpoly}
@@ -13,6 +15,21 @@
 square(x, y, d = 0.9, ...)
 
 rectangle(x, y, d = 0.9, dx = d, dy = d, ...)
+
+rounded_square(x, y, d = 0.9, r = 0.2, n = 10, ...)
+
+rounded_rectangle(
+  x,
+  y,
+  d = 0.9,
+  dx = d,
+  dy = d,
+  r = 0.2,
+  rx = r,
+  ry = r,
+  n = 10,
+  ...
+)
 
 circle(x, y, d = 0.9, n = 1000, ...)
 
@@ -32,9 +49,14 @@ shapes(x, y, n, d = 0.9, dx = d, dy = d, rotate = 0, ...)
 
 \item{dx, dy}{**optional** diameter in either coordinate direction}
 
+\item{r, rx, ry}{**optional** for rounded corner, the proportion of side marking the start of
+rounded corner.}
+
 \item{n}{the number of vertices of polygon, with the minimum of three (triangle). Large `n`, such
 as `n=1000` approximate circle. The vertices start at the 12 o'clock position and are placed
-clockwise in a regular intervals.}
+clockwise in a regular intervals. For `rounded_square` and `rounded_rectangle`, the number of
+vertices that approximate the circular shape of the rounded corners. Small `n`, such as
+`n=10` should have sufficient smoothness for most applications.}
 
 \item{rotate}{**optional** clockwise rotation in degrees (0-360°),
 not available for `square` and `rectangle`}
@@ -50,7 +72,8 @@ Polygons are drawn centered on the `x` and `y` coordinates, with a diameter `d`
 (or `dx` and `dy`). Typically, different shapes are obtained through a parametrization
 of the `shapes()` function, which draws a convex polygon using the [graphics::polygon()],
 with the exception of `square()` and `rectangle()` function, which use the [graphics::rect()]
-function instead, behave slightly differently, and should be slightly faster.
+function instead, behave slightly differently, and should be slightly faster, and the
+`rounded_square()` and `rounded_rectangle()`, which use `round_rect()` function.
 
 The diameter parameter `d` is interpreted differently depending for `square()` and `rectangle()`
 and for other polygonal functions build on the `shapes()` function (`circle()`, `ellipse()`
@@ -74,6 +97,10 @@ See examples.
 \item \code{square()}: draw squares
 
 \item \code{rectangle()}: draw rectangles
+
+\item \code{rounded_square()}: draw squares with rounded corners
+
+\item \code{rounded_rectangle()}: draw rectangles with rounded corners
 
 \item \code{circle()}: draw circles
 
