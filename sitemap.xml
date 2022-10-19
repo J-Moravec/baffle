@@ -25,6 +25,9 @@
     <loc>https://j-moravec.github.io/baffle/index.html</loc>
   </url>
   <url>
+    <loc>https://j-moravec.github.io/baffle/news/index.html</loc>
+  </url>
+  <url>
     <loc>https://j-moravec.github.io/baffle/reference/Shapes.html</loc>
   </url>
   <url>
@@ -38,6 +41,9 @@
   </url>
   <url>
     <loc>https://j-moravec.github.io/baffle/reference/recycle_dots.html</loc>
+  </url>
+  <url>
+    <loc>https://j-moravec.github.io/baffle/reference/round_rect.html</loc>
   </url>
   <url>
     <loc>https://j-moravec.github.io/baffle/reference/waffle.html</loc>

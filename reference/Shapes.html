@@ -24,6 +24,9 @@
 <li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
@@ -55,6 +58,21 @@
 <span></span>
 <span><span class="fu">rectangle</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, d <span class="op">=</span> <span class="fl">0.9</span>, dx <span class="op">=</span> <span class="va">d</span>, dy <span class="op">=</span> <span class="va">d</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">rounded_square</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, d <span class="op">=</span> <span class="fl">0.9</span>, r <span class="op">=</span> <span class="fl">0.2</span>, n <span class="op">=</span> <span class="fl">10</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">rounded_rectangle</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">y</span>,</span>
+<span>  d <span class="op">=</span> <span class="fl">0.9</span>,</span>
+<span>  dx <span class="op">=</span> <span class="va">d</span>,</span>
+<span>  dy <span class="op">=</span> <span class="va">d</span>,</span>
+<span>  r <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>  rx <span class="op">=</span> <span class="va">r</span>,</span>
+<span>  ry <span class="op">=</span> <span class="va">r</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">circle</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, d <span class="op">=</span> <span class="fl">0.9</span>, n <span class="op">=</span> <span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">ellipse</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, d <span class="op">=</span> <span class="fl">0.9</span>, dx <span class="op">=</span> <span class="va">d</span>, dy <span class="op">=</span> <span class="va">d</span>, n <span class="op">=</span> <span class="fl">1000</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -83,10 +101,17 @@
 <dd><p>**optional** diameter in either coordinate direction</p></dd>
 
 
+<dt>r, rx, ry</dt>
+<dd><p>**optional** for rounded corner, the proportion of side marking the start of
+rounded corner.</p></dd>
+
+
 <dt>n</dt>
 <dd><p>the number of vertices of polygon, with the minimum of three (triangle). Large `n`, such
 as `n=1000` approximate circle. The vertices start at the 12 o'clock position and are placed
-clockwise in a regular intervals.</p></dd>
+clockwise in a regular intervals. For `rounded_square` and `rounded_rectangle`, the number of
+vertices that approximate the circular shape of the rounded corners. Small `n`, such as
+`n=10` should have sufficient smoothness for most applications.</p></dd>
 
 
 <dt>rotate</dt>
@@ -106,7 +131,8 @@ not available for `square` and `rectangle`</p></dd>
 (or `dx` and `dy`). Typically, different shapes are obtained through a parametrization
 of the `shapes()` function, which draws a convex polygon using the [graphics::polygon()],
 with the exception of `square()` and `rectangle()` function, which use the [graphics::rect()]
-function instead, behave slightly differently, and should be slightly faster.</p>
+function instead, behave slightly differently, and should be slightly faster, and the
+`rounded_square()` and `rounded_rectangle()`, which use `round_rect()` function.</p>
 <p>The diameter parameter `d` is interpreted differently depending for `square()` and `rectangle()`
 and for other polygonal functions build on the `shapes()` function (`circle()`, `ellipse()`
 and `rcpoly()`). For the `square()` and `rectangle()`, the diameter is the size of the square,
@@ -127,6 +153,8 @@ See examples.</p>
     
 <ul><li><p><code>square()</code>: draw squares</p></li>
 <li><p><code>rectangle()</code>: draw rectangles</p></li>
+<li><p><code>rounded_square()</code>: draw squares with rounded corners</p></li>
+<li><p><code>rounded_rectangle()</code>: draw rectangles with rounded corners</p></li>
 <li><p><code>circle()</code>: draw circles</p></li>
 <li><p><code>ellipse()</code>: draw ellipses</p></li>
 <li><p><code>rcpoly()</code>: draw regular convex polygons</p></li>
