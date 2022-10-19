@@ -17,6 +17,8 @@
 #' @param n the number of points used to approximate the curvature of the rounded corner
 #' @param ... other parameters passed to [graphics::polygon()].
 #' @return No return value, called for side effects
+#'
+#' @export
 round_rect = function(x1, y1, x2, y2, xr=0.2, yr=0.2, n=10, ...){
     Map(f=.round_rect, x1=x1, y1=y1, x2=x2, y2=y2, xr=xr, yr=yr, n=n, ...)
     invisible(NULL)

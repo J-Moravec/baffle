@@ -1,6 +1,6 @@
 Package: baffle
 Title: Make Waffle Plots with Base Graphics
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     person(given = "Jiří",
            family = "Moravec",

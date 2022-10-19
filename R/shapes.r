@@ -91,12 +91,14 @@ rectangle = function(x, y, d=0.9, dx=d, dy=d, ...){
 
 
 #' @describeIn Shapes draw squares with rounded corners
+#' @export
 rounded_square = function(x, y, d=0.9, r=0.2, n=10, ...){
     .rounded_rectangle(x=x, y=y, d=d, r=r, n=n, ...)
     }
 
 
 #' @describeIn Shapes draw rectangles with rounded corners
+#' @export
 rounded_rectangle = function(
     x, y, d=0.9, dx=d, dy=d,
     r=0.2, rx=r, ry=r, n=10,
