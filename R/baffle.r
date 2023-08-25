@@ -10,5 +10,5 @@
 #' proportional ratios.
 #' 
 #' @docType package
-#' @name baffle
-NULL
+#' @keywords internal
+"_PACKAGE"
